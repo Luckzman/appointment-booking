@@ -6,6 +6,9 @@ import Doctors from "../pages/Doctors/Doctors";
 import DoctorDetails from "../pages/Doctors/DoctorsDetails";
 import Service from "../pages/Service";
 import Contact from "../pages/Contact";
+import MyAccount from "../Dashboard/user-account/MyAccount";
+import DoctorDashboard from "../Dashboard/doctor-account/DoctorDashboard";
+import ProtectedRoute from "./ProtectedRoute";
 
 const Router = () => {
     return (
@@ -18,6 +21,8 @@ const Router = () => {
             <Route path="/doctors/:id" element={<DoctorDetails />} />
             <Route path="/services" element={<Service />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/users/profile/me" element={<ProtectedRoute allowedRoles={['patient']}><MyAccount /></ProtectedRoute>} />
+            <Route path="/doctors/profile/me" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
         </Routes>
     )
 }

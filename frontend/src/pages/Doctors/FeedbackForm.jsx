@@ -1,21 +1,54 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
-
+import { AuthContext } from '../../context/AuthContext';
+import PulseLoader from "react-spinners/PulseLoader.js";
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../config';
 const FeedbackForm = () => {
-
+    const { token } = useContext(AuthContext)
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
     const [reviewText, setReviewText] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    const {id} = useParams()
 
     const handleSubmitReview = async e => {
         e.preventDefault();
-        
-        // later we will use our api
+        setLoading(true)
+        try {
+            console.log('test', rating, 'rating', reviewText, 'reviewText')
+            if(!rating || !reviewText){
+                setLoading(false)
+                return toast.error('Rating & Review Fields are required')
+            }
+
+            const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ rating, reviewText })
+            })
+            console.log(res, 'result')
+            if(!res.ok) {
+                throw new Error(res.message)
+            }
+
+            setLoading(false)
+            toast.success(res.message)
+        } catch (error) {
+            console.log(error, 'error')
+            setLoading(false)
+            toast.error(error.message)
+        }
     }
 
     return (
-        <form action="">
+        <form action="" onSubmit={handleSubmitReview}>
             <div>
                 <h3 className="text-headingColor text-[16px] leading-6 font-semibold mb-4">
                     How would you rate the overall experience?*
@@ -56,7 +89,9 @@ const FeedbackForm = () => {
                     onChange={(e) => setReviewText(e.target.value)}
                 ></textarea>
             </div>
-            <button className="btn" type='submit' onClick={handleSubmitReview}>Submit Feedback</button>
+            <button className="btn" type='submit'>
+                {loading ? <PulseLoader size={15} color='#fff' /> : 'Submit Feedback'}
+            </button>
         </form>
     )
 }
