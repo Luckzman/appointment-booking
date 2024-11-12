@@ -70,6 +70,7 @@ export const login = async (req, res) => {
         if(!isPasswordMatch) return res.status(400).json({ success: false, message: 'Invalid Credentials' })
             // if the credential is correct, we generate a jwt access token to allow user access other resources
         const token = generateToken(user)
+        console.log(token, 'token')
 
         const { password, role, appointments, ...rest } = user.toJSON()
 
