@@ -17,7 +17,6 @@ export const useFetchData = (url) => {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 const result = await res.json();
-                console.log(result, 'result')
                 if(!res.ok) throw new Error(result.message + '😡')
 
                 setData(result.data);

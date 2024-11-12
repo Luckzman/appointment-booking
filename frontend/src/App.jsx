@@ -1,8 +1,7 @@
-import "./app.css";
+import "./App.css";
 import Layout from "./layout/Layout";
 
 function App() {
-  console.log(import.meta.env.MODE)
   return (
     <Layout />
   );
