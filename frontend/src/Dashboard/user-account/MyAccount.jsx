@@ -5,14 +5,14 @@ import { BASE_URL } from '../../config.js';
 import { useFetchData } from '../../hooks/useFetchData.jsx';
 import Error from '../../components/Error/Error.jsx'
 import Loading from '../../components/Loader/Loading.jsx';
-import Profile from './profile.jsx';
+import Profile from './Profile.jsx';
 
 const MyAccount = () => {
     const {dispatch} = useContext(AuthContext)
     const [tab, setTab] = useState('bookings')
 
     const { data, loading, error } = useFetchData(`${BASE_URL}/users/profile/me`)
-    
+
     const handleLogout = () => {
         dispatch({ type: 'LOGOUT'})
     }
@@ -23,7 +23,7 @@ const MyAccount = () => {
                 { loading && !error && <Loading /> }
 
                 { error && !loading && <Error errMessage={error} /> }
-                
+
                 {!loading && !error && (
                     <div className="grid md:grid-cols-3 gap-10">
                         <div className="pb-[50px] px-[30px] rounded-md">
@@ -37,7 +37,7 @@ const MyAccount = () => {
                                 <h3 className="text-[18px] leading-[30px] text-headingColor font-bold">{data.name}</h3>
                                 <p className="text-textColor text-[15px] leading-6 font-medium">{data.email}</p>
                                 <p className="text-textColor text-[15px] leading-6 font-medium">
-                                    Blood Type: 
+                                    Blood Type:
                                     <span className='ml-2 text-headingColor text-[22px] leading-8'>{data.bloodType}</span>
                                 </p>
                             </div>

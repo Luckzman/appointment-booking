@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom'
-import starIcon from '../../assets/images/star.png'
+import starIcon from '../../assets/images/Star.png'
 import { BsArrowRight } from 'react-icons/bs'
 
 const DoctorCard = ({ doctor }) => {
     const {name, avgRating, totalRating, photo, specialization, experiences } = doctor
-    
+
     return (
         <div className="p-3 lg:p-5">
             <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80'>
